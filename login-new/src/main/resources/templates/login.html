@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ユーザ登録</title>
-    <!-- <link rel="stylesheet" th:href="@{styles.css}"> -->
-    <link rel="stylesheet" href="styles.css">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>ユーザ登録</title>
+		<!-- <link rel="stylesheet" th:href="@{styles.css}"> -->
+		<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="login-container">
-        <h2>ユーザ登録</h2>
-        
-        <!--登录失败弹窗，默认不显示-->
-        <div th:if="${loginError}" id="loginErrorDiv" style="display: none;">
-        	<th:block th:text="${loginError}"></th:block>
-        </div>
-    
-        <form id="loginForm" th:action="@{/login}" method="post">
-            <input type="text" id="username" name="userName" placeholder="Username"><br>
-            <input type="password" id="password" name="password" placeholder="Password">
-            <button type="submit" id="loginButton">ログイン</button>
-            <button type="button" id="clearButton">クリア</button>
-        </form>
-    </div>
+		<div class="login-container">
+				<h2>ユーザ登録</h2>
+
+				<!--登录失败弹窗，默认不显示-->
+				<div th:if="${loginError}" id="loginErrorDiv" style="display: none;">
+					<th:block th:text="${loginError}"></th:block>
+				</div>
+
+				<form id="loginForm" th:action="@{/login}" th:object="${userForm}" method="post"> 
+					    <span class="fieldError" th:if="${#fields.hasErrors('*{userName}')}" th:errors="*{userName}" style="color: red"></span>
+						<input type="text" id="username" name="userName" th:field="*{userName}" placeholder="Username">
+						
+						<span class="fieldError" th:if="${#fields.hasErrors('*{password}')}" th:errors="*{password}" style="color: red"></span>
+						<input type="password" id="password" name="password" th:field="*{password}" placeholder="Password">
+						
+						<button type="submit" id="loginButton">ログイン</button>
+						<button type="button" id="clearButton">クリア</button>
+				</form>
+		</div>
 </body>
 <!--<script th:src="@{./js/jquery-3.7.1.js}" type="text/javascript" charset="utf-8"></script>-->
 <script th:src="@{./js/loginjs.js}"></script>
